@@ -1,0 +1,15 @@
+.home {
+   h1 {
+    color: cadetblue;
+   }
+   .pet-form {
+      .btn-primary {
+         &.disabled {
+            cursor: default;
+         }
+         &:disabled {
+            cursor: default;
+         }
+      }
+   }
+}
