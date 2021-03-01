@@ -1,10 +1,10 @@
 import {icons, images} from '../constants';
 
 export const initialCurrentLocation = {
-  streetName: 'Kuching',
+  streetName: 'Tezpur',
   gps: {
-    latitude: 1.5496614931250685,
-    longitude: 110.36381866919922
+    latitude: 26.6528,
+    longitude: 92.7926
   }
 };
 

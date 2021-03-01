@@ -15,7 +15,7 @@ export const COLORS = {
   lightGray3: '#EFEFF1',
   lightGray4: '#F8F8F9',
   transparent: 'transparent',
-  darkgray: '#898C95',
+  darkgray: '#898C95'
 };
 
 export const SIZES = {
@@ -40,14 +40,14 @@ export const SIZES = {
 
   // app dimensions
   width,
-  height,
+  height
 };
 
 export const FONTS = {
   largeTitle: {
     fontFamily: 'Roboto-regular',
     fontSize: SIZES.largeTitle,
-    lineHeight: 55,
+    lineHeight: 55
   },
   h1: {fontFamily: 'Roboto-Black', fontSize: SIZES.h1, lineHeight: 36},
   h2: {fontFamily: 'Roboto-Bold', fontSize: SIZES.h2, lineHeight: 30},
@@ -57,7 +57,7 @@ export const FONTS = {
   body2: {fontFamily: 'Roboto-Regular', fontSize: SIZES.body2, lineHeight: 30},
   body3: {fontFamily: 'Roboto-Regular', fontSize: SIZES.body3, lineHeight: 22},
   body4: {fontFamily: 'Roboto-Regular', fontSize: SIZES.body4, lineHeight: 22},
-  body5: {fontFamily: 'Roboto-Regular', fontSize: SIZES.body5, lineHeight: 22},
+  body5: {fontFamily: 'Roboto-Regular', fontSize: SIZES.body5, lineHeight: 22}
 };
 
 const appTheme = {COLORS, SIZES, FONTS};
