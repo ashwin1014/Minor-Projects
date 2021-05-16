@@ -5,8 +5,8 @@ import RecipeCard from '../components/RecipeCard'
 export async function getStaticProps() {
 
   const client = createClient({
-    space: 'l2fo7q87x38p',
-    accessToken: 'KUhN3H4u9mskj9GMOYbdT3hcwY_o5QbLYPgCM8mK1KQ',
+    space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID,
+    accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_KEY,
   })
 
   const res = await client.getEntries({ content_type: "recipe" })
@@ -29,6 +29,17 @@ export default function Recipes(props) {
           <RecipeCard key={recipe.sys.id} recipe={recipe} />
         ))
       }
+      <style jsx>
+         {
+           `
+            .recipe-list {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              grid-gap: 20px 60px;
+            }
+           `
+         }
+      </style>
     </div>
   )
 }
