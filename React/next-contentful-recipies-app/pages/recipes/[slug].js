@@ -2,6 +2,7 @@ import Image from 'next/image';
 
 import { createClient } from 'contentful';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import Skeleton from '../../components/Skeleton';
 
 
 const client = createClient({
@@ -20,7 +21,7 @@ export const getStaticPaths = async () => {
 
   return {
     paths,
-    fallback: false
+    fallback: true
   }
 };
 
@@ -43,7 +44,9 @@ export async function getStaticProps(context) {
 
 export default function RecipeDetails(props) {
   const { recipe } = props;
-  console.log(recipe)
+  // console.log(recipe)
+
+  if(!recipe) return <Skeleton />
 
   const { title, featuredImage, cookingTime, ingredients, method } = recipe.fields;
 
@@ -67,39 +70,39 @@ export default function RecipeDetails(props) {
         {documentToReactComponents(method)}
       </div>
       <style jsx>{`
-        h2,h3 {
-          text-transform: uppercase;
-        }
-        .banner {
-          display: flex;
-          flex-direction: column;
-        }
-        .banner .banner-image {
-          object-fit: cover;
-        }
-        .banner h2 {
-          margin: 0;
-          background: #fff;
-          display: inline-block;
-          padding: 20px;
-          position: relative;
-          top: -60px;
-          left: -10px;
-          transform: rotateZ(-1deg);
-          box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
-          max-width: 400px;
-          width: auto;
-          text-align: center
-        }
-        .info p {
-          margin: 0;
-        }
-        .info span::after {
-          content: ", ";
-        }
-        .info span:last-child::after {
-          content: ".";
-        }
+          h2,h3 {
+            text-transform: uppercase;
+          }
+          .banner {
+            display: flex;
+            flex-direction: column;
+          }
+          .banner .banner-image {
+            object-fit: cover;
+          }
+          .banner h2 {
+            margin: 0;
+            background: #fff;
+            display: inline-block;
+            padding: 20px;
+            position: relative;
+            top: -60px;
+            left: -10px;
+            transform: rotateZ(-1deg);
+            box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: auto;
+            text-align: center
+          }
+          .info p {
+            margin: 0;
+          }
+          .info span::after {
+            content: ", ";
+          }
+          .info span:last-child::after {
+            content: ".";
+          }
       `}</style>
     </div>
   )
