@@ -34,6 +34,15 @@ export async function getStaticProps(context) {
 
   const res = await client.getEntries({ content_type: "recipe", 'fields.slug': params.slug })
 
+  if(!res.items.length) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
   return {
     props: {
       recipe: res.items[0],
