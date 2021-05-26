@@ -19,6 +19,8 @@ const Restaurant = ({route, navigation}) => {
   const [location, setLocation] = useState();
   console.log(route);
 
+  const scrollX = new Animated.Value(0);
+
   useEffect(() => {
     const {item, currentLocation} = route.params;
     setRestaurant(item);
@@ -59,8 +61,10 @@ const Restaurant = ({route, navigation}) => {
         scrollEventThrottle={16}
         snapToAlignment="center"
         showsHorizontalScrollIndicator={false}
-        // onScroll
-      >
+        onScroll={Animated.event(
+          [{nativeEvent: {contentOffset: {x: scrollX}}}],
+          {useNativeDriver: false}
+        )}>
         {restaurant?.menu.map((item, index) => (
           <View key={index} style={{alignItems: 'center'}}>
             <View style={{height: SIZES.height * 0.35}}>
@@ -81,16 +85,98 @@ const Restaurant = ({route, navigation}) => {
                 </TouchableOpacity>
               </View>
             </View>
+            {/* Name & Description */}
+            <View
+              style={{
+                width: SIZES.width,
+                alignItems: 'center',
+                marginTop: 15,
+                paddingHorizontal: SIZES.padding * 2
+              }}>
+              <Text style={{marginVertical: 10, textAlign: 'center'}}>
+                {item.name}
+              </Text>
+              <Text style={{...FONTS.body3}}>{item.description}</Text>
+            </View>
+            {/* Calories */}
+            <View
+              style={{
+                flexDirection: 'row',
+                marginTop: 10
+              }}>
+              <Image
+                source={icons.fire}
+                style={{width: 20, height: 20, marginRight: 10}}
+              />
+              <Text style={{...FONTS.body3, color: COLORS.darkgray}}>
+                {item.calories.toFixed(2)} cal
+              </Text>
+            </View>
           </View>
         ))}
       </Animated.ScrollView>
     );
   }
 
+  function renderDots() {
+    const dotPosition = Animated.divide(scrollX, SIZES.width);
+
+    return (
+      <View style={{height: 30}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: SIZES.padding
+          }}>
+          {restaurant?.menu.map((item, index) => {
+            const opacity = dotPosition.interpolate({
+              inputRange: [index - 1, index, index + 1],
+              outputRange: [0.3, 1, 0.3],
+              extrapolate: 'clamp'
+            });
+
+            const dotSize = dotPosition.interpolate({
+              inputRange: [index - 1, index, index + 1],
+              outputRange: [SIZES.base * 0.8, 10, SIZES.base * 0.8],
+              extrapolate: 'clamp'
+            });
+
+            const dotColor = dotPosition.interpolate({
+              inputRange: [index - 1, index, index + 1],
+              outputRange: [COLORS.darkgray, COLORS.primary, COLORS.darkgray],
+              extrapolate: 'clamp'
+            });
+
+            return (
+              <Animated.View
+                key={`dot-${index}`}
+                opacity={opacity}
+                style={{
+                  borderRadius: SIZES.radius,
+                  marginHorizontal: 6,
+                  width: dotSize,
+                  height: dotSize,
+                  backgroundColor: dotColor
+                }}
+              />
+            );
+          })}
+        </View>
+      </View>
+    );
+  }
+
+  function renderOrdering() {
+    return <View>{renderDots()}</View>;
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       {renderHeader()}
       {renderFoodInfo()}
+      {renderOrdering()}
     </SafeAreaView>
   );
 };
