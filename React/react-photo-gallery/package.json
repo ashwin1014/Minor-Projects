@@ -128,7 +128,7 @@
     "yarn-upgrade-all": "0.5.2"
   },
   "dependencies": {
-    "axios": "0.19.2",
+    "axios": "0.21.1",
     "firebase": "^7.17.1",
     "framer-motion": "^2.3.0",
     "libphonenumber-js": "^1.7.55",
