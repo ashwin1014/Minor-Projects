@@ -1,8 +1,14 @@
-import { FC } from 'react'
-
 import MeetupList from '../components/meetups/MeetupList';
 
-const DUMMY_MEETUPS = [
+export interface Data {
+  image: string | undefined;
+  title: string | undefined;
+  address: string | undefined;
+  description: string | undefined;
+  id?: string | undefined;
+}
+
+const DUMMY_MEETUPS: Data[] = [
   {
     id: 'm1',
     title: 'Kazirangs National Park',
@@ -20,12 +26,29 @@ const DUMMY_MEETUPS = [
 ];
 
 
-const Home: FC = () => {
+const Home = ({ meetups }: {meetups: Data[]  }): JSX.Element=> {
+  console.log(meetups)
+  // const [state, setState] = useState<Data[] | []>([]);
+
+  // useEffect(() => {
+  //   setState(DUMMY_MEETUPS)
+  // }, []);
+
   return (
-        <div>
-            <MeetupList meetups={DUMMY_MEETUPS} />
-        </div>
+        <>
+            <MeetupList meetups={meetups} />
+        </>
   )
+}
+
+export async function getStaticProps() {
+
+  return {
+    props: {
+      meetups: DUMMY_MEETUPS
+    },
+    revalidate: 10
+  }
 }
 
 export default Home
